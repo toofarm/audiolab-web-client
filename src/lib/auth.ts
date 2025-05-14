@@ -1,4 +1,5 @@
-import { API_URL } from "../constants";
+import { API_URL } from "./constants";
+import { getSession } from "./session";
 
 export const register_user = async (user: RegisterUser) => {
   try {
@@ -24,12 +25,16 @@ export const register_user = async (user: RegisterUser) => {
 
 export const login_user = async (user: LoginUser) => {
   try {
+    const formData = new FormData();
+    for (const key in user) {
+      if (Object.prototype.hasOwnProperty.call(user, key)) {
+        formData.append(key, (user as Record<string, string>)[key]);
+      }
+    }
+
     const response = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
+      body: formData,
     });
 
     if (!response.ok) {
@@ -66,21 +71,23 @@ export const logout_user = async (token: string) => {
   }
 };
 
-export const verify_user = async (token: string) => {
+export const verify_user = async () => {
   try {
+    const token = await getSession();
+
     const response = await fetch(`${API_URL}/auth/me`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
 
-    if (!response.ok) {
-      throw new Error("Failed to verify user");
+    const data = await response.json();
+
+    if (!data.email) {
+      throw new Error("Invalid token");
     }
 
-    const data = await response.json();
     return data;
   } catch (error) {
     console.error("Error verifying user:", error);
