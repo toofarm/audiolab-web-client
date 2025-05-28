@@ -1,18 +1,19 @@
 import { FC } from 'react';
 
 const Button: FC<{
-    text: string;
-    onClick: () => void;
+    type?: 'button' | 'submit' | 'reset';
     className?: string;
     disabled?: boolean;
-}> = ({ text, onClick, className, disabled }) => {
+    children?: React.ReactNode;
+}> = ({ type, className, disabled, children }) => {
     return (
         <button
-            onClick={onClick}
-            className={`bg-blue-500 text-white font-bold py-2 px-4 rounded ${className}`}
+            type={type || 'button'}
+            className={`bg-blue-500 text-white font-bold py-2 px-4 
+                hover:cursor-pointer hover:opacity-80 rounded ${className}`}
             disabled={disabled}
         >
-            {text}
+            {children}
         </button>
     );
 }

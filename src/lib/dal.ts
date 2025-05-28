@@ -11,15 +11,18 @@ export const verifyAuth = cache(async () => {
     return { isAuthenticated: false };
   } else {
     try {
-      const response = await verify_user();
-      if (!response) {
+      const user = await verify_user();
+      if (!user) {
         return { isAuthenticated: false };
       }
+
+      return {
+        ...user,
+        isAuthenticated: true,
+      };
     } catch (error) {
       console.error("Error verifying user:", error);
       return { isAuthenticated: false };
     }
   }
-
-  return { isAuthenticated: true };
 });

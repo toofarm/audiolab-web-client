@@ -73,6 +73,6 @@ export const loginAuth = async (data: FormData): Promise<void> => {
     console.error("Error verifying user:", error);
     throw new Error("Failed to verify user");
   } finally {
-    redirect("/");
+    redirect("/dashboard");
   }
 };
