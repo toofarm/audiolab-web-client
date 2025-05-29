@@ -18,7 +18,6 @@ export const UploadPage: FC = () => {
                 <InputFile
                     id="track-file"
                     label="Select an audio file"
-                    onChange={(e) => console.log(e.target.files)}
                     accept=".mp3,.wav"
                     required
                 />

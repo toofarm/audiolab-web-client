@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { get_user } from '@/lib/dto/user';
 import { get_tracks } from '@/lib/dto/tracks';
+import { formatDuration } from '@/lib/utils';
 
 // Components
 import HeadingTwo from '@/components/HeadingTwo';
@@ -25,6 +26,20 @@ const DashboardPage: FC = async () => {
                 <p className='text-secondary-txt'>
                     This is your personal dashboard where you can manage your tracks and account settings.
                 </p>
+                <nav>
+                    <ul className='flex flex-col items-start justify-start gap-2 mt-4'>
+                        <li>
+                            <BlueLink href='/tracks'>
+                                My Tracks
+                            </BlueLink>
+                        </li>
+                        <li>
+                            <BlueLink href='/settings'>
+                                Account Settings
+                            </BlueLink>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <HeadingFour>
                 Tracks
@@ -36,7 +51,7 @@ const DashboardPage: FC = async () => {
                             <BlueLink href={`/tracks/${track.id}`}>
                                 {track.filename}
                             </BlueLink>
-                            <p className="text-sm text-gray-600">{track.duration}</p>
+                            <p className="text-sm text-gray-600">{formatDuration(track.duration_sec)}</p>
                         </li>
                     ))}
                 </ul>) : <HeadingFour>

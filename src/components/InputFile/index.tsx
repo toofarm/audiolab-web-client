@@ -3,7 +3,6 @@ import { FC } from 'react';
 const InputFile: FC<{
     id: string;
     label: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     accept?: string;
     required?: boolean;
 }> = ({ id, label, accept, required = false }) => {

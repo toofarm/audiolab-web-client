@@ -1,8 +1,9 @@
 "use server";
 
-import { createTrack } from "@/lib/tracks";
+import { createTrack, deleteTrack } from "@/lib/tracks";
 import { getSession } from "@/lib/session";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export const uploadTrack = async (data: FormData) => {
   let newTrack;
@@ -30,5 +31,38 @@ export const uploadTrack = async (data: FormData) => {
     throw error;
   } finally {
     redirect(`/tracks/${newTrack.id}`);
+  }
+};
+
+export const deleteOneTrack = async (data: FormData) => {
+  try {
+    const token = await getSession();
+
+    const trackId = data.get("trackId") as string;
+
+    if (!token) {
+      throw new Error("User is not authenticated");
+    }
+
+    // Assuming there's a deleteTrack function in the lib/tracks module
+    const response = await deleteTrack(token, trackId);
+
+    if (!response) {
+      throw new Error("Failed to delete track");
+    }
+  } catch (error) {
+    console.error("Error deleting track:", error);
+    throw error;
+  } finally {
+    const path = data.get("path") as string;
+    const re = data.get("redirect") as string;
+
+    if (re === "true") {
+      redirect(path || "/tracks");
+    }
+
+    if (path) {
+      revalidatePath(path);
+    }
   }
 };

@@ -34,11 +34,13 @@ type AuthUser = {
 type Track = {
   id: string;
   filename: string;
-  duration: number;
+  estimated_key?: string;
+  duration_sec: number;
   sample_rate: number;
   tempo_bpm: number;
   loudness_rms: number;
   spectrogram_base64?: string;
-  waveform_base64?: string;
+  waveplot_base64?: string;
   content_type: string;
+  size: number;
 };
