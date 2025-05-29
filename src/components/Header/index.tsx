@@ -16,8 +16,8 @@ const Header: FC = async () => {
             {isAuthenticated && (<nav>
                 <ul className='flex flex-row gap-4'>
                     <li>
-                        <BlueLink href={'/'}>
-                            Home
+                        <BlueLink href={'/dashboard'}>
+                            Dashboard
                         </BlueLink>
                     </li>
                     <li>
