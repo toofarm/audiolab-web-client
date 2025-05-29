@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
 @tailwind utilities;
 
 :root {
@@ -12,13 +10,17 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary-txt: #222;
+  --color-secondary-txt: #e0e0e0;
+  --color-cta: #0070f3;
+  --color-cta-hover: #005bb5;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #343333;
     --foreground: #ededed;
   }
 }

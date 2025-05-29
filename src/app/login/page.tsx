@@ -1,18 +1,40 @@
 import { FC } from 'react';
 import { loginAuth } from '../actions/auth';
 
+// Components
+import HeadingTwo from '@/components/HeadingTwo';
+import InputText from '@/components/InputText';
+import Button from '@/components/Button';
+
 const LoginPage: FC = () => {
     return (
         <div>
-            <h1>Login</h1>
-            <form action={loginAuth}>
-                <label htmlFor="username">Email:</label>
-                <input type="text" id="username" name="username" required />
+            <form
+                action={loginAuth}
+                className='flex flex-col gap-4 p-4 my-8 rounded bg-white shadow-md
+                max-w-md mx-auto'>
+                <HeadingTwo>Login</HeadingTwo>
+                <InputText
+                    name="username"
+                    label="Email"
+                    type="text"
+                    required
+                    placeholder="Enter your email"
+                />
 
-                <label htmlFor="password">Password:</label>
-                <input type="password" id="password" name="password" required />
+                <InputText
+                    name="password"
+                    label="Password"
+                    type="password"
+                    required
+                    placeholder="Enter your password"
+                />
 
-                <button type="submit">Login</button>
+                <Button
+                    type="submit"
+                >
+                    Login
+                </Button>
             </form>
         </div>
     );
