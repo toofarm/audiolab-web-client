@@ -4,6 +4,7 @@ import { createTrack, deleteTrack } from "@/lib/tracks";
 import { getSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { API_URL } from "@/lib/constants";
 
 export const uploadTrack = async (data: FormData) => {
   let newTrack;
@@ -65,4 +66,24 @@ export const deleteOneTrack = async (data: FormData) => {
       revalidatePath(path);
     }
   }
+};
+
+export const streamTrack = async (id: string) => {
+  const token = await getSession();
+
+  if (!token) {
+    throw new Error("User is not authenticated");
+  }
+
+  const response = await fetch(`${API_URL}/api/tracks/${id}/stream`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to stream track with id ${id}`);
+  }
+
+  return response.body as ReadableStream;
 };

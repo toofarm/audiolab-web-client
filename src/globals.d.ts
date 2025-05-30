@@ -43,4 +43,5 @@ type Track = {
   waveplot_base64?: string;
   content_type: string;
   size: number;
+  file_path?: string;
 };

@@ -1,4 +1,4 @@
-import { get_track } from "@/lib/dto/tracks";
+import { get_track, stream_track } from "@/lib/dto/tracks";
 import { formatDuration, formatSampleRate, formatFileSize } from "@/lib/utils";
 import { deleteOneTrack } from "@/app/actions/tracks";
 import Image from "next/image";
@@ -8,6 +8,7 @@ import HeadingTwo from "@/components/HeadingTwo";
 import HeadingThree from "@/components/HeadingThree";
 import LabeledItem from "@/components/LabeledItem";
 import Breadcrumb from "@/components/Breadcrumb";
+import AudioPlayer from "@/components/AudioPlayer";
 
 const TrackDetailPage = async ({
     params,
@@ -17,7 +18,7 @@ const TrackDetailPage = async ({
     const { slug } = await params;
     const track = await get_track(slug);
 
-    // console.log("Track details:", track);
+    console.log("Track details:", track);
 
     return (
         <div className="flex flex-col items-start justify-start gap-2">
@@ -52,6 +53,11 @@ const TrackDetailPage = async ({
                 <HeadingThree>
                     Track ID: {track.id}
                 </HeadingThree>
+                {track.file_path && <div className="my-1">
+                    <AudioPlayer
+                        id={track.id}
+                    />
+                </div>}
                 <LabeledItem label="File Type" item={track.content_type} />
                 <LabeledItem label="Duration" item={formatDuration(track.duration_sec)} />
                 <LabeledItem label="File Size" item={formatFileSize(track.size)} />
