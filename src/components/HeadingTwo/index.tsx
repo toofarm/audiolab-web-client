@@ -8,7 +8,7 @@ const HeadingTwo: FC<Props> = ({
     children,
 }) => {
     return (
-        <h2 className="text-2xl font-bold text-primary-txt">
+        <h2 className="text-3xl font-bold text-primary-txt">
             {children}
         </h2>
     );

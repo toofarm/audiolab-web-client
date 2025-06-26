@@ -26,3 +26,22 @@ type AuthUser = {
   name: string;
   image: string;
 };
+
+/////////////////
+// TRACKS TYPES
+/////////////////
+
+type Track = {
+  id: string;
+  filename: string;
+  estimated_key?: string;
+  duration_sec: number;
+  sample_rate: number;
+  tempo_bpm: number;
+  loudness_rms: number;
+  spectrogram_base64?: string;
+  waveplot_base64?: string;
+  content_type: string;
+  size: number;
+  file_path?: string;
+};
