@@ -56,6 +56,7 @@ const TrackDetailPage = async ({
                 {track.file_path && <div className="my-1">
                     <AudioPlayer
                         id={track.id}
+                        content_type={track.content_type}
                     />
                 </div>}
                 <LabeledItem label="File Type" item={track.content_type} />
