@@ -1,4 +1,4 @@
-import { get_track, stream_track } from "@/lib/dto/tracks";
+import { get_track } from "@/lib/dto/tracks";
 import { formatDuration, formatSampleRate, formatFileSize } from "@/lib/utils";
 import { deleteOneTrack } from "@/app/actions/tracks";
 import Image from "next/image";
@@ -9,6 +9,7 @@ import HeadingThree from "@/components/HeadingThree";
 import LabeledItem from "@/components/LabeledItem";
 import Breadcrumb from "@/components/Breadcrumb";
 import AudioPlayer from "@/components/AudioPlayer";
+import AudioFeatures from "@/components/AudioFeatures";
 
 const TrackDetailPage = async ({
     params,
@@ -17,8 +18,6 @@ const TrackDetailPage = async ({
 }) => {
     const { slug } = await params;
     const track = await get_track(slug);
-
-    console.log("Track details:", track);
 
     return (
         <div className="flex flex-col items-start justify-start gap-2">
@@ -66,6 +65,11 @@ const TrackDetailPage = async ({
                 <LabeledItem label="Tempo (BPM)" item={track.tempo_bpm} />
                 <LabeledItem label="Loudness (RMS)" item={track.loudness_rms} />
                 <LabeledItem label="Key Signature (Estimated)" item={track.estimated_key || "N/A"} />
+
+                {/* Audio Features Section */}
+                <div className="my-8">
+                    <AudioFeatures track={track} />
+                </div>
 
                 <div className="my-4">
                     <HeadingThree>

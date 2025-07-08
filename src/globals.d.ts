@@ -44,4 +44,15 @@ type Track = {
   content_type: string;
   size: number;
   file_path?: string;
+  danceability?: number;
+  energy?: number;
+  valence?: number;
+  acousticness?: number;
+  instrumentalness?: number;
+  liveness?: number;
+  speechiness?: number;
+  loudness?: number;
+  key?: string;
+  mode?: string;
+  time_signature?: number;
 };
