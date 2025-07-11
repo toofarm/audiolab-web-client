@@ -1,6 +1,5 @@
 import { get_track } from "@/lib/dto/tracks";
 import { formatDuration, formatSampleRate, formatFileSize } from "@/lib/utils";
-import { deleteOneTrack } from "@/app/actions/tracks";
 import Image from "next/image";
 
 // Components
@@ -10,6 +9,7 @@ import LabeledItem from "@/components/LabeledItem";
 import Breadcrumb from "@/components/Breadcrumb";
 import AudioPlayer from "@/components/AudioPlayer";
 import AudioFeatures from "@/components/AudioFeatures";
+import DeleteTrackButton from "@/components/DeleteTrackButton";
 
 const TrackDetailPage = async ({
     params,
@@ -29,22 +29,12 @@ const TrackDetailPage = async ({
                 ]}
             />
             <div className="mt-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-4">
                     <HeadingTwo>{track.filename}</HeadingTwo>
                     <nav>
                         <ul className="flex items-center gap-2">
                             <li>
-                                <form action={deleteOneTrack}>
-                                    <input type="hidden" name="trackId" value={track.id} />
-                                    <input type="hidden" name="path" value={`/tracks`} />
-                                    <input type="hidden" name="redirect" value={'true'} />
-                                    <button
-                                        type="submit"
-                                        className="text-red-600 text-sm hover:text-red-800 hover:cursor-pointer"
-                                    >
-                                        Delete Track
-                                    </button>
-                                </form>
+                                <DeleteTrackButton trackId={track.id} />
                             </li>
                         </ul>
                     </nav>

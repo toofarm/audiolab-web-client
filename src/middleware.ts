@@ -23,7 +23,7 @@ const middleware = async (req: NextRequest) => {
 
   // If the user is not authenticated and trying to access a protected route, redirect to the login page
   if (!isAuthenticated && !isPublicRoute) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL(`/login?next=${path}`, req.url));
   }
 
   return NextResponse.next();
