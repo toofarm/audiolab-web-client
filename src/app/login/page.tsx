@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 import { loginAuth } from '../actions/auth';
 
@@ -5,14 +7,19 @@ import { loginAuth } from '../actions/auth';
 import HeadingTwo from '@/components/HeadingTwo';
 import InputText from '@/components/InputText';
 import Button from '@/components/Button';
+import FormWithLoading from '@/components/FormWithLoading';
+import { useSearchParams } from 'next/navigation';
 
 const LoginPage: FC = () => {
+    const searchParams = useSearchParams();
+
     return (
         <div>
-            <form
+            <FormWithLoading
                 action={loginAuth}
-                className='flex flex-col gap-4 p-4 my-8 rounded bg-white shadow-md
-                max-w-md mx-auto'>
+                className='flex flex-col gap-4 p-4 my-8 rounded bg-white shadow-md max-w-md mx-auto'
+                loadingMessage='Signing you in...'
+            >
                 <HeadingTwo>Login</HeadingTwo>
                 <InputText
                     name="username"
@@ -30,12 +37,12 @@ const LoginPage: FC = () => {
                     placeholder="Enter your password"
                 />
 
-                <Button
-                    type="submit"
-                >
+                <input type="hidden" name="next" value={searchParams.get('next') || '/dashboard'} />
+
+                <Button type="submit">
                     Login
                 </Button>
-            </form>
+            </FormWithLoading>
         </div>
     );
 };
