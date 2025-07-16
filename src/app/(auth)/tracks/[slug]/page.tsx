@@ -1,4 +1,4 @@
-import { get_track } from "@/lib/dto/tracks";
+import { createServerTracksService } from "@/lib/services/tracks.server";
 import { formatDuration, formatSampleRate, formatFileSize } from "@/lib/utils";
 import Image from "next/image";
 
@@ -17,7 +17,10 @@ const TrackDetailPage = async ({
     params: Promise<{ slug: string }>;
 }) => {
     const { slug } = await params;
-    const track = await get_track(slug);
+
+    // Create server service instance
+    const tracksService = createServerTracksService();
+    const track = await tracksService.getById(slug);
 
     return (
         <div className="flex flex-col items-start justify-start gap-2">

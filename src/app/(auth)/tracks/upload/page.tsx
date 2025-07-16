@@ -1,36 +1,19 @@
-import { FC, Suspense } from 'react';
-import { uploadTrack } from '@/app/actions/tracks';
+'use client';
 
-// Components
-import HeadingTwo from '@/components/HeadingTwo';
-import InputFile from '@/components/InputFile';
-import Button from '@/components/Button';
-import FormWithLoading from '@/components/FormWithLoading';
-import Loading from '@/app/loading';
+import { FC } from 'react';
+import TrackUpload from '@/components/TrackUpload';
 
-export const UploadPage: FC = () => {
+const UploadPage: FC = () => {
     return (
-        <div>
-            <Suspense fallback={<Loading />}>
-                <HeadingTwo>
-                    Upload a new track
-                </HeadingTwo>
-                <FormWithLoading
-                    action={uploadTrack}
-                    className="flex flex-col items-start justify-start py-4"
-                    loadingMessage='Uploading and analyzing your track...'
-                >
-                    <InputFile
-                        id="track-file"
-                        label="Select an audio file"
-                        accept=".mp3,.wav"
-                        required
-                    />
-                    <Button type="submit">
-                        Upload Track
-                    </Button>
-                </FormWithLoading>
-            </Suspense>
+        <div className="space-y-8">
+            <div>
+                <h1 className="text-3xl font-bold mb-2">Upload Track</h1>
+                <p className="text-gray-600">
+                    Upload and share your music with the world
+                </p>
+            </div>
+
+            <TrackUpload />
         </div>
     );
 };

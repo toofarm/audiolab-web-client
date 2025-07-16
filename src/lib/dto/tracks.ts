@@ -1,11 +1,12 @@
 import { getTracks, getTrack } from "../tracks";
-import { getSession } from "../session";
 import { API_URL } from "../constants";
+import { getSession } from "../session";
 
 export const get_tracks = async (): Promise<Track[]> => {
   const token = await getSession();
+
   if (!token) {
-    throw new Error("User is not authenticated");
+    throw new Error("No session found");
   }
 
   const tracks = await getTracks(token);
@@ -18,11 +19,12 @@ export const get_tracks = async (): Promise<Track[]> => {
 
 export const get_track = async (id: string): Promise<Track> => {
   const token = await getSession();
+
   if (!token) {
-    throw new Error("User is not authenticated");
+    throw new Error("No session found");
   }
 
-  const track = await getTrack(token, id);
+  const track = await getTrack(id, token);
 
   if (!track) {
     throw new Error(`Track with id ${id} not found`);
@@ -33,8 +35,9 @@ export const get_track = async (id: string): Promise<Track> => {
 
 export const stream_track = async (id: string): Promise<ReadableStream> => {
   const token = await getSession();
+
   if (!token) {
-    throw new Error("User is not authenticated");
+    throw new Error("No session found");
   }
 
   const response = await fetch(`${API_URL}/api/tracks/${id}/stream`, {

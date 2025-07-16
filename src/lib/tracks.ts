@@ -1,11 +1,9 @@
-import { API_URL } from "./constants";
-
-export const getTracks = async (token: string) => {
+export const getTracks = async (token: string, serverUrl: string) => {
   try {
-    const response = await fetch(`${API_URL}/api/tracks`, {
+    const response = await fetch(`${serverUrl}/api/tracks`, {
       method: "GET",
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
@@ -22,12 +20,16 @@ export const getTracks = async (token: string) => {
   }
 };
 
-export const getTrack = async (token: string, trackId: string) => {
+export const getTrack = async (
+  trackId: string,
+  token: string,
+  serverUrl: string
+) => {
   try {
-    const response = await fetch(`${API_URL}/api/tracks/${trackId}`, {
+    const response = await fetch(`${serverUrl}/api/tracks/${trackId}`, {
       method: "GET",
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
@@ -44,12 +46,16 @@ export const getTrack = async (token: string, trackId: string) => {
   }
 };
 
-export const createTrack = async (token: string, trackData: File) => {
+export const createTrack = async (
+  trackData: File,
+  token: string,
+  serverUrl: string
+) => {
   try {
     const formData = new FormData();
     formData.append("file", trackData);
 
-    const response = await fetch(`${API_URL}/api/upload`, {
+    const response = await fetch(`${serverUrl}/api/upload`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -69,9 +75,13 @@ export const createTrack = async (token: string, trackData: File) => {
   }
 };
 
-export const deleteTrack = async (token: string, trackId: string) => {
+export const deleteTrack = async (
+  trackId: string,
+  token: string,
+  serverUrl: string
+) => {
   try {
-    const response = await fetch(`${API_URL}/api/tracks/${trackId}`, {
+    const response = await fetch(`${serverUrl}/api/tracks/${trackId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -91,15 +101,16 @@ export const deleteTrack = async (token: string, trackId: string) => {
 };
 
 export const updateTrack = async (
-  token: string,
   trackId: string,
-  trackData: File
+  trackData: File,
+  token: string,
+  serverUrl: string
 ) => {
   try {
     const formData = new FormData();
     formData.append("file", trackData);
 
-    const response = await fetch(`${API_URL}/api/tracks/${trackId}`, {
+    const response = await fetch(`${serverUrl}/api/tracks/${trackId}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,

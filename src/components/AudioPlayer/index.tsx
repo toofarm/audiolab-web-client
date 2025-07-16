@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useRef, useEffect, useState } from 'react';
-import { SERVER_URL } from '@/lib/constants';
+import { CLIENT_API_URL } from '@/lib/constants';
 
 type Props = {
     id: string;
@@ -36,7 +36,7 @@ const AudioPlayer: FC<Props> = ({ id, content_type }) => {
                 }
 
                 // Make direct fetch request
-                const response = await fetch(`${SERVER_URL}/api/tracks/${id}/stream`, {
+                const response = await fetch(`${CLIENT_API_URL}/api/tracks/${id}/stream`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

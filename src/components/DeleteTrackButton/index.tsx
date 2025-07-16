@@ -1,18 +1,21 @@
 'use client';
 
 import { FC, useState } from 'react';
-import { deleteOneTrack } from '@/app/actions/tracks';
+import { deleteTrack } from '@/lib/tracks';
 import { useLoading } from '@/contexts/LoadingContext';
+import { useRouter } from 'next/navigation';
 import Button from '../Button';
 
 interface DeleteTrackButtonProps {
     trackId: string;
     className?: string;
+    onDelete?: () => void;
 }
 
-const DeleteTrackButton: FC<DeleteTrackButtonProps> = ({ trackId, className = '' }) => {
+const DeleteTrackButton: FC<DeleteTrackButtonProps> = ({ trackId, className = '', onDelete }) => {
     const [isDeleting, setIsDeleting] = useState(false);
     const { startLoading, stopLoading } = useLoading();
+    const router = useRouter();
 
     const handleDelete = async () => {
         if (isDeleting) return;
@@ -25,12 +28,15 @@ const DeleteTrackButton: FC<DeleteTrackButtonProps> = ({ trackId, className = ''
         startLoading('Deleting track...');
 
         try {
-            const formData = new FormData();
-            formData.append('trackId', trackId);
-            formData.append('path', '/tracks');
-            formData.append('redirect', 'true');
+            await deleteTrack(trackId);
 
-            await deleteOneTrack(formData);
+            // Call the onDelete callback if provided
+            if (onDelete) {
+                onDelete();
+            } else {
+                // Default behavior: redirect to tracks page
+                router.push('/tracks');
+            }
         } catch (error) {
             console.error('Error deleting track:', error);
             stopLoading();

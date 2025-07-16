@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 
 const InputText: FC<{
@@ -6,7 +8,10 @@ const InputText: FC<{
     type?: string;
     required?: boolean;
     placeholder?: string;
-}> = ({ name, label, type = 'text', required = false, placeholder }) => {
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    disabled?: boolean;
+}> = ({ name, label, type = 'text', required = false, placeholder, value, onChange, disabled = false }) => {
     return (
         <div className='flex flex-col gap-2'>
             {label && <label
@@ -20,6 +25,9 @@ const InputText: FC<{
                 name={name}
                 required={required}
                 placeholder={placeholder}
+                value={value}
+                onChange={onChange}
+                disabled={disabled}
                 className='p-2 border rounded text-primary-txt'
             />
         </div>
