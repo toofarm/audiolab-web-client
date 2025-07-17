@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { get_user } from '@/lib/dto/user';
-import { get_tracks } from '@/lib/dto/tracks';
 import { formatDuration } from '@/lib/utils';
+import { createServerTracksService } from '@/lib/services/tracks.server';
 
 // Components
 import HeadingTwo from '@/components/HeadingTwo';
@@ -12,7 +12,10 @@ import BlueLink from '@/components/BlueLink';
 
 const DashboardPage: FC = async () => {
     const user = await get_user();
-    const tracks = await get_tracks();
+
+    const tracksService = createServerTracksService();
+
+    const tracks = await tracksService.getAll();
 
     return (
         <div>
@@ -30,7 +33,12 @@ const DashboardPage: FC = async () => {
                     <ul className='flex flex-col items-start justify-start gap-2 mt-4'>
                         <li>
                             <BlueLink href='/tracks'>
-                                My Tracks
+                                Tracks
+                            </BlueLink>
+                        </li>
+                        <li>
+                            <BlueLink href='/samples'>
+                                Samples
                             </BlueLink>
                         </li>
                         <li>

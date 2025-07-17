@@ -8,6 +8,8 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import Button from '@/components/Button';
 import BlueLink from '@/components/BlueLink';
 import Breadcrumb from '@/components/Breadcrumb';
+import AudioPlayer from '@/components/AudioPlayer';
+import ButtonDanger from '@/components/ButtonDanger';
 
 interface SampleDetailPageProps {
     params: Promise<{ id: string }>;
@@ -114,16 +116,33 @@ const SampleDetailPage: FC<SampleDetailPageProps> = ({ params }) => {
                         </p>
                     </div>
                     <div className="flex gap-2 flex-col text-right justify-end">
-                        <Button
-                            onClick={loadAnalysis}
-                            disabled={showAnalysis}
-                        >
-                            {showAnalysis ? 'Analysis Loaded' : 'View Analysis'}
-                        </Button>
+                        <div className="flex gap-2">
+                            <Button
+                                onClick={loadAnalysis}
+                                disabled={showAnalysis}
+                            >
+                                {showAnalysis ? 'Analysis Loaded' : 'View Analysis'}
+                            </Button>
+                            <ButtonDanger
+                                onClick={() => {
+                                    samplesService.delete(sample.id);
+                                }}
+                            >
+                                Delete Sample
+                            </ButtonDanger>
+                        </div>
                         <BlueLink href="/samples">
                             Back to Samples
                         </BlueLink>
                     </div>
+                </div>
+
+                <div className="my-6">
+                    <AudioPlayer
+                        id={sample.id.toString()}
+                        content_type={sample.content_type}
+                        file_path='samples'
+                    />
                 </div>
 
                 {/* Basic Info Grid */}

@@ -6,9 +6,10 @@ import { CLIENT_API_URL } from '@/lib/constants';
 type Props = {
     id: string;
     content_type: string;
+    file_path?: string;
 };
 
-const AudioPlayer: FC<Props> = ({ id, content_type }) => {
+const AudioPlayer: FC<Props> = ({ id, content_type, file_path = 'tracks' }) => {
     const audioRef = useRef<HTMLAudioElement>(null);
     const [progress, setProgress] = useState<number>(0);
     const [error, setError] = useState<string | null>(null);
@@ -36,7 +37,7 @@ const AudioPlayer: FC<Props> = ({ id, content_type }) => {
                 }
 
                 // Make direct fetch request
-                const response = await fetch(`${CLIENT_API_URL}/api/tracks/${id}/stream`, {
+                const response = await fetch(`${CLIENT_API_URL}/api/${file_path}/${id}/stream`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

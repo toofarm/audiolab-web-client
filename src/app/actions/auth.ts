@@ -54,6 +54,7 @@ export const logoutAuth = async (): Promise<void> => {
 };
 
 export const loginAuth = async (data: FormData): Promise<void> => {
+  let didError = false;
   try {
     const username = data.get("username") as string;
     const password = data.get("password") as string;
@@ -70,10 +71,11 @@ export const loginAuth = async (data: FormData): Promise<void> => {
     const token = res.access_token;
     await createSession(token);
   } catch (error) {
+    didError = true;
     console.error("Error verifying user:", error);
     throw new Error("Failed to verify user");
   } finally {
     const next = data.get("next") as string;
-    redirect(next || "/dashboard");
+    redirect(didError ? "/login?error=true" : next || "/dashboard");
   }
 };

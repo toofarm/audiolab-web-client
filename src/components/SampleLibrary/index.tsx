@@ -6,6 +6,7 @@ import { useLoading } from '@/contexts/LoadingContext';
 import Button from '../Button';
 import LoadingSpinner from '../LoadingSpinner';
 import BlueLink from '../BlueLink';
+import ButtonDanger from '../ButtonDanger';
 
 interface SampleLibraryProps {
     className?: string;
@@ -232,12 +233,11 @@ const SampleLibrary: FC<SampleLibraryProps> = ({
                                 </p>
                             </div>
                             {!selectable && (
-                                <Button
+                                <ButtonDanger
                                     onClick={() => handleDelete(sample.id)}
-                                    className="text-red-600 hover:text-red-800 text-sm"
                                 >
                                     Delete
-                                </Button>
+                                </ButtonDanger>
                             )}
                         </div>
 

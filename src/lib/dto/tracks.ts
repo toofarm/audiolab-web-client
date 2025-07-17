@@ -1,5 +1,5 @@
 import { getTracks, getTrack } from "../tracks";
-import { API_URL } from "../constants";
+import { CLIENT_API_URL } from "../constants";
 import { getSession } from "../session";
 
 export const get_tracks = async (): Promise<Track[]> => {
@@ -9,7 +9,7 @@ export const get_tracks = async (): Promise<Track[]> => {
     throw new Error("No session found");
   }
 
-  const tracks = await getTracks(token);
+  const tracks = await getTracks(token, CLIENT_API_URL);
   if (!tracks || tracks.length === 0) {
     throw new Error("No tracks found");
   }
@@ -24,7 +24,7 @@ export const get_track = async (id: string): Promise<Track> => {
     throw new Error("No session found");
   }
 
-  const track = await getTrack(id, token);
+  const track = await getTrack(id, token, CLIENT_API_URL);
 
   if (!track) {
     throw new Error(`Track with id ${id} not found`);
@@ -40,7 +40,7 @@ export const stream_track = async (id: string): Promise<ReadableStream> => {
     throw new Error("No session found");
   }
 
-  const response = await fetch(`${API_URL}/api/tracks/${id}/stream`, {
+  const response = await fetch(`${CLIENT_API_URL}/api/tracks/${id}/stream`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

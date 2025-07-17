@@ -1,10 +1,10 @@
 'use client';
 
 import { FC, useState } from 'react';
-import { deleteTrack } from '@/lib/tracks';
+import { createClientTracksService } from '@/lib/services/tracks';
 import { useLoading } from '@/contexts/LoadingContext';
 import { useRouter } from 'next/navigation';
-import Button from '../Button';
+import LoadingSpinner from '../LoadingSpinner';
 
 interface DeleteTrackButtonProps {
     trackId: string;
@@ -16,6 +16,7 @@ const DeleteTrackButton: FC<DeleteTrackButtonProps> = ({ trackId, className = ''
     const [isDeleting, setIsDeleting] = useState(false);
     const { startLoading, stopLoading } = useLoading();
     const router = useRouter();
+    const tracksService = createClientTracksService();
 
     const handleDelete = async () => {
         if (isDeleting) return;
@@ -28,7 +29,7 @@ const DeleteTrackButton: FC<DeleteTrackButtonProps> = ({ trackId, className = ''
         startLoading('Deleting track...');
 
         try {
-            await deleteTrack(trackId);
+            await tracksService.delete(trackId);
 
             // Call the onDelete callback if provided
             if (onDelete) {
@@ -45,14 +46,15 @@ const DeleteTrackButton: FC<DeleteTrackButtonProps> = ({ trackId, className = ''
     };
 
     return (
-        <Button
+        <button
             onClick={handleDelete}
-            loading={isDeleting}
             disabled={isDeleting}
-            className={`text-red-600 text-sm hover:text-red-800 hover:cursor-pointer ${className}`}
+            className={`border border-red-500 text-red-500 hover:bg-red-500 hover:text-white font-bold py-2 px-4 
+                hover:cursor-pointer rounded flex items-center justify-center gap-2
+                ${isDeleting ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
         >
-            {isDeleting ? 'Deleting...' : 'Delete Track'}
-        </Button>
+            {isDeleting ? <LoadingSpinner size="sm" /> : 'Delete'}
+        </button>
     );
 };
 

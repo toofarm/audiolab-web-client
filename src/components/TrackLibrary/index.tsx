@@ -6,6 +6,7 @@ import { useLoading } from '@/contexts/LoadingContext';
 import Button from '../Button';
 import LoadingSpinner from '../LoadingSpinner';
 import BlueLink from '../BlueLink';
+import ButtonDanger from '../ButtonDanger';
 import { formatDuration, formatTempo } from '@/lib/utils';
 
 interface TrackLibraryProps {
@@ -133,12 +134,11 @@ const TrackLibrary: FC<TrackLibraryProps> = ({
                                 </h3>
                             </div>
                             {!selectable && (
-                                <Button
+                                <ButtonDanger
                                     onClick={() => handleDelete(track.id)}
-                                    className="text-red-600 hover:text-red-800 text-sm"
                                 >
                                     Delete
-                                </Button>
+                                </ButtonDanger>
                             )}
                         </div>
 
