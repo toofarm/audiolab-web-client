@@ -16,9 +16,13 @@ const middleware = async (req: NextRequest) => {
   // Check for a session cookie
   const { isAuthenticated } = await verifyAuth();
 
+  // if (isAuthenticated && path === "/") {
+  //   return NextResponse.redirect(new URL("/dashboard", req.url));
+  // }
+
   // If the user is authenticated and trying to access a non-auth route, redirect to the home page
   if (isAuthenticated && isPublicRoute) {
-    return NextResponse.redirect(new URL("/", req.url));
+    return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
   // If the user is not authenticated and trying to access a protected route, redirect to the login page

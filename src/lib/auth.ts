@@ -1,9 +1,9 @@
-import { API_URL } from "./constants";
+import { SERVER_API_URL } from "./constants";
 import { getSession } from "./session";
 
 export const register_user = async (user: RegisterUser) => {
   try {
-    const response = await fetch(`${API_URL}/auth/register`, {
+    const response = await fetch(`${SERVER_API_URL}/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export const login_user = async (user: LoginUser) => {
       }
     }
 
-    const response = await fetch(`${API_URL}/auth/login`, {
+    const response = await fetch(`${SERVER_API_URL}/auth/login`, {
       method: "POST",
       body: formData,
     });
@@ -51,7 +51,7 @@ export const login_user = async (user: LoginUser) => {
 
 export const logout_user = async (token: string) => {
   try {
-    const response = await fetch(`${API_URL}/auth/logout`, {
+    const response = await fetch(`${SERVER_API_URL}/auth/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +75,7 @@ export const verify_user = async () => {
   try {
     const token = await getSession();
 
-    const response = await fetch(`${API_URL}/auth/me`, {
+    const response = await fetch(`${SERVER_API_URL}/auth/me`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

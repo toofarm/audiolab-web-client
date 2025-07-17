@@ -1,18 +1,22 @@
 'use client';
 
 import { FC, useState } from 'react';
-import { deleteOneTrack } from '@/app/actions/tracks';
+import { createClientTracksService } from '@/lib/services/tracks';
 import { useLoading } from '@/contexts/LoadingContext';
-import Button from '../Button';
+import { useRouter } from 'next/navigation';
+import LoadingSpinner from '../LoadingSpinner';
 
 interface DeleteTrackButtonProps {
     trackId: string;
     className?: string;
+    onDelete?: () => void;
 }
 
-const DeleteTrackButton: FC<DeleteTrackButtonProps> = ({ trackId, className = '' }) => {
+const DeleteTrackButton: FC<DeleteTrackButtonProps> = ({ trackId, className = '', onDelete }) => {
     const [isDeleting, setIsDeleting] = useState(false);
     const { startLoading, stopLoading } = useLoading();
+    const router = useRouter();
+    const tracksService = createClientTracksService();
 
     const handleDelete = async () => {
         if (isDeleting) return;
@@ -25,12 +29,15 @@ const DeleteTrackButton: FC<DeleteTrackButtonProps> = ({ trackId, className = ''
         startLoading('Deleting track...');
 
         try {
-            const formData = new FormData();
-            formData.append('trackId', trackId);
-            formData.append('path', '/tracks');
-            formData.append('redirect', 'true');
+            await tracksService.delete(trackId);
 
-            await deleteOneTrack(formData);
+            // Call the onDelete callback if provided
+            if (onDelete) {
+                onDelete();
+            } else {
+                // Default behavior: redirect to tracks page
+                router.push('/tracks');
+            }
         } catch (error) {
             console.error('Error deleting track:', error);
             stopLoading();
@@ -39,14 +46,15 @@ const DeleteTrackButton: FC<DeleteTrackButtonProps> = ({ trackId, className = ''
     };
 
     return (
-        <Button
+        <button
             onClick={handleDelete}
-            loading={isDeleting}
             disabled={isDeleting}
-            className={`text-red-600 text-sm hover:text-red-800 hover:cursor-pointer ${className}`}
+            className={`border border-red-500 text-red-500 hover:bg-red-500 hover:text-white font-bold py-2 px-4 
+                hover:cursor-pointer rounded flex items-center justify-center gap-2
+                ${isDeleting ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
         >
-            {isDeleting ? 'Deleting...' : 'Delete Track'}
-        </Button>
+            {isDeleting ? <LoadingSpinner size="sm" /> : 'Delete'}
+        </button>
     );
 };
 

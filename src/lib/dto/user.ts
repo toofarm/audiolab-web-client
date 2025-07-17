@@ -1,5 +1,5 @@
 import { getSession } from "../session";
-import { API_URL } from "../constants";
+import { SERVER_API_URL } from "../constants";
 
 export const get_user = async () => {
   try {
@@ -8,7 +8,7 @@ export const get_user = async () => {
       throw new Error("No session token found");
     }
 
-    const response = await fetch(`${API_URL}/auth/user`, {
+    const response = await fetch(`${SERVER_API_URL}/auth/user`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
