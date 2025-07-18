@@ -94,9 +94,6 @@ const SampleUpload: FC<SampleUploadProps> = ({ onUploadSuccess, className = '' }
                 onUploadSuccess();
             }
 
-            // Show success message
-            console.log('Sample uploaded successfully:', result);
-
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to upload sample');
         } finally {

@@ -1,10 +1,13 @@
 'use client';
 
 import { FC } from 'react';
+import { useRouter } from 'next/navigation';
 import SampleUpload from '@/components/SampleUpload';
 import SampleLibrary from '@/components/SampleLibrary';
 
 const SamplesPage: FC = () => {
+    const router = useRouter();
+
     return (
         <div className="space-y-8 min-w-full">
             <div>
@@ -17,8 +20,8 @@ const SamplesPage: FC = () => {
             {/* Upload Section */}
             <SampleUpload
                 onUploadSuccess={() => {
-                    // Refresh the library when a new sample is uploaded
-                    window.location.reload();
+                    // Refresh the page data
+                    router.refresh();
                 }}
             />
 
