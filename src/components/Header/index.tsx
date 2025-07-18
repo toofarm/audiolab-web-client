@@ -42,6 +42,11 @@ const Header: FC = () => {
                         </BlueLink>
                     </li>
                     <li>
+                        <BlueLink href={'/projects'}>
+                            Projects
+                        </BlueLink>
+                    </li>
+                    <li>
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             className='flex flex-row items-center gap-2 cursor-pointer'
